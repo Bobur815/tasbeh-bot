@@ -4,6 +4,7 @@ export interface DhikrType {
   nameUz: string;
   target?: number;
   arabic?: string;
+  customName?: string; // For custom dhikr
 }
 
 export interface DhikrSession {
@@ -12,6 +13,7 @@ export interface DhikrSession {
   startTime: number;
   endTime?: number;
   date: string;
+  customName?: string; // For custom dhikr
 }
 
 export interface DailyStats {
@@ -19,6 +21,7 @@ export interface DailyStats {
   sessions: DhikrSession[];
   totalCount: number;
   dhikrTypes: { [key: string]: number };
+  customDhikrNames?: { [key: string]: string }; // Store custom dhikr names by session/dhikr ID
 }
 
 export interface UserData {
@@ -78,8 +81,8 @@ export const DHIKR_TYPES: DhikrType[] = [
   },
   {
     id: 'custom',
-    name: 'Custom Count',
-    nameUz: 'Boshqa raqam',
+    name: 'Custom Dhikr',
+    nameUz: 'Boshqa zikr',
     target: 99,
   },
 ];

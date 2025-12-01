@@ -3,6 +3,10 @@
 import { useState, useEffect } from 'react';
 import { DHIKR_TYPES, DhikrType } from '../types/dhikr';
 import { CloudStorageManager } from '../services/CloudStorageManager';
+import { translations } from '@/libs/translations';
+import { RenderDhikrSelector } from '@/libs/renderDhikrSelector';
+import { RenderStats } from '@/libs/renderStats';
+import { RenderSettings } from '@/libs/renderSettings';
 
 type Language = 'en' | 'uz';
 type View = 'counter' | 'dhikr-selector' | 'stats' | 'settings';
@@ -13,6 +17,7 @@ export default function Home() {
   const [showCompletion, setShowCompletion] = useState(false);
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customValue, setCustomValue] = useState('');
+  const [customDhikrText, setCustomDhikrText] = useState(''); // For custom dhikr name
   const [language, setLanguage] = useState<Language>('uz');
   const [view, setView] = useState<View>('counter');
   const [selectedDhikr, setSelectedDhikr] = useState<DhikrType | null>(null);
@@ -21,63 +26,6 @@ export default function Home() {
   const [totalLifetimeCount, setTotalLifetimeCount] = useState(0);
 
   const storage = CloudStorageManager.getInstance();
-
-  const translations = {
-    en: {
-      targetLabel: 'Select Target',
-      count33: '33 count',
-      count99: '99 count',
-      count100: '100 count',
-      customCount: 'Custom count',
-      enterNumber: 'Enter number',
-      resetConfirm: 'Do you want to restart counting?',
-      completionTitle: 'Subhanalloh!',
-      completionText: 'You have reached your target!',
-      continue: 'Continue',
-      selectDhikr: 'Select Dhikr',
-      stats: 'Statistics',
-      settings: 'Settings',
-      back: 'Back',
-      todayStats: "Today's Statistics",
-      todayTotal: 'Total today',
-      lifetimeTotal: 'Lifetime total',
-      noStatsToday: 'No dhikr counted today. Start counting!',
-      languageSetting: 'Language',
-      notificationSetting: 'Daily Reminder',
-      enabled: 'Enabled',
-      disabled: 'Disabled',
-      dhikrTypes: 'Dhikr Types',
-      today: 'Today',
-      target: 'Target',
-    },
-    uz: {
-      targetLabel: 'Maqsad tanlang',
-      count33: '33 dona',
-      count99: '99 dona',
-      count100: '100 dona',
-      customCount: 'Boshqa raqam',
-      enterNumber: 'Raqamni kiriting',
-      resetConfirm: 'Hisoblashni qayta boshlashni xohlaysizmi?',
-      completionTitle: 'Subhonalloh!',
-      completionText: 'Siz maqsadga yetdingiz!',
-      continue: 'Davom ettirish',
-      selectDhikr: 'Zikr tanlash',
-      stats: 'Statistika',
-      settings: 'Sozlamalar',
-      back: 'Orqaga',
-      todayStats: 'Bugungi statistika',
-      todayTotal: 'Bugun jami',
-      lifetimeTotal: 'Umumiy jami',
-      noStatsToday: 'Bugun hali zikr qilinmagan. Boshlang!',
-      languageSetting: 'Til',
-      notificationSetting: 'Kunlik eslatma',
-      enabled: 'Yoqilgan',
-      disabled: "O'chirilgan",
-      dhikrTypes: 'Zikr turlari',
-      today: 'Bugun',
-      target: 'Maqsad',
-    },
-  };
 
   const t = translations[language];
 
@@ -143,7 +91,8 @@ export default function Home() {
 
   const updateCloudStorage = async () => {
     if (selectedDhikr) {
-      await storage.updateCurrentSessionCount(selectedDhikr.id, count);
+      const customName = selectedDhikr.id === 'custom' ? selectedDhikr.customName : undefined;
+      await storage.updateCurrentSessionCount(selectedDhikr.id, count, customName);
       await loadTodayStats();
       const userData = await storage.getUserData();
       setTotalLifetimeCount(userData.totalLifetimeCount);
@@ -224,133 +173,43 @@ export default function Home() {
     setReminderEnabled(newValue);
     await storage.updateUserPreferences({ reminderEnabled: newValue });
   };
-
-  const renderDhikrSelector = () => (
-    <div className="dhikr-selector-view">
-      <div className="view-header">
-        <button className="back-button" onClick={() => setView('counter')}>
-          ← {t.back}
-        </button>
-        <h2>{t.selectDhikr}</h2>
-      </div>
-      <div className="dhikr-list">
-        {DHIKR_TYPES.map((dhikr) => {
-          const todayCount = todayStats?.dhikrTypes[dhikr.id] || 0;
-          const progress = dhikr.target ? (todayCount / dhikr.target) * 100 : 0;
-
-          return (
-            <div
-              key={dhikr.id}
-              className="dhikr-card"
-              onClick={() => handleDhikrSelect(dhikr)}
-            >
-              <div className="dhikr-info">
-                <div className="dhikr-name">
-                  {language === 'en' ? dhikr.name : dhikr.nameUz}
-                </div>
-                {dhikr.arabic && (
-                  <div className="dhikr-arabic">{dhikr.arabic}</div>
-                )}
-              </div>
-              <div className="dhikr-stats">
-                <span className="stat-label">{t.today}:</span>
-                <span className="stat-value">{todayCount}</span>
-                {dhikr.target && (
-                  <>
-                    <span className="stat-separator">/</span>
-                    <span className="stat-target">{dhikr.target}</span>
-                  </>
-                )}
-              </div>
-              {dhikr.target && (
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{ width: `${Math.min(progress, 100)}%` }}
-                  />
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-
-  const renderStats = () => (
-    <div className="stats-view">
-      <div className="view-header">
-        <button className="back-button" onClick={() => setView('counter')}>
-          ← {t.back}
-        </button>
-        <h2>{t.stats}</h2>
-      </div>
-      <div className="stats-content">
-        <div className="stats-card">
-          <div className="stats-label">{t.todayTotal}</div>
-          <div className="stats-value">{todayStats?.totalCount || 0}</div>
-        </div>
-        <div className="stats-card">
-          <div className="stats-label">{t.lifetimeTotal}</div>
-          <div className="stats-value">{totalLifetimeCount}</div>
-        </div>
-        {todayStats && todayStats.totalCount > 0 ? (
-          <div className="dhikr-breakdown">
-            <h3>{t.dhikrTypes}</h3>
-            {Object.entries(todayStats.dhikrTypes).map(([dhikrId, count]: [string, any]) => {
-              const dhikr = DHIKR_TYPES.find(d => d.id === dhikrId);
-              return (
-                <div key={dhikrId} className="breakdown-item">
-                  <span className="breakdown-name">
-                    {dhikr ? (language === 'en' ? dhikr.name : dhikr.nameUz) : dhikrId}
-                  </span>
-                  <span className="breakdown-count">{count}</span>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="no-stats">{t.noStatsToday}</div>
-        )}
-      </div>
-    </div>
-  );
-
-  const renderSettings = () => (
-    <div className="settings-view">
-      <div className="view-header">
-        <button className="back-button" onClick={() => setView('counter')}>
-          ← {t.back}
-        </button>
-        <h2>{t.settings}</h2>
-      </div>
-      <div className="settings-content">
-        <div className="setting-item">
-          <div className="setting-label">{t.languageSetting}</div>
-          <button className="setting-toggle" onClick={toggleLanguage}>
-            {language === 'en' ? '🇬🇧 English' : '🇺🇿 O\'zbekcha'}
-          </button>
-        </div>
-        <div className="setting-item">
-          <div className="setting-label">{t.notificationSetting}</div>
-          <button className="setting-toggle" onClick={toggleReminder}>
-            {reminderEnabled ? `✅ ${t.enabled}` : `❌ ${t.disabled}`}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  
 
   if (view === 'dhikr-selector') {
-    return renderDhikrSelector();
+    return (
+      <RenderDhikrSelector
+        setView={setView}
+        t={t}
+        todayStats={todayStats}
+        handleDhikrSelect={handleDhikrSelect}
+        language={language}
+      />
+    );
   }
 
   if (view === 'stats') {
-    return renderStats();
+    return (
+      <RenderStats
+        setView={setView}
+        t={t}
+        todayStats={todayStats}
+        totalLifetimeCount={totalLifetimeCount}
+        language={language}
+      />
+    );
   }
 
   if (view === 'settings') {
-    return renderSettings();
+    return (
+      <RenderSettings
+        setView={setView}
+        t={t}
+        toggleLanguage={toggleLanguage}
+        language={language}
+        toggleReminder={toggleReminder}
+        reminderEnabled={reminderEnabled}
+      />
+    );
   }
 
   return (
@@ -372,9 +231,42 @@ export default function Home() {
         {/* Selected Dhikr Display */}
         {selectedDhikr && (
           <div className="selected-dhikr">
-            <div className="selected-dhikr-name">
-              {language === 'en' ? selectedDhikr.name : selectedDhikr.nameUz}
-            </div>
+            {selectedDhikr.id === 'custom' ? (
+              selectedDhikr.customName ? (
+                <div className="selected-dhikr-name">
+                  {selectedDhikr.customName}
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 items-center">
+                  <input
+                    type="text"
+                    placeholder={language === 'en' ? 'Enter custom dhikr' : 'Zikr nomini kiriting'}
+                    className='outline-none border-b-2 border-gray-300 focus:border-blue-500 px-2 py-1'
+                    value={customDhikrText}
+                    onChange={(e) => setCustomDhikrText(e.target.value)}
+                  />
+                  <button
+                    className='text-blue-500 cursor-pointer hover:text-blue-600 font-semibold disabled:text-gray-400'
+                    onClick={() => {
+                      if (customDhikrText.trim()) {
+                        setSelectedDhikr({
+                          ...selectedDhikr,
+                          customName: customDhikrText.trim()
+                        });
+                        setCustomDhikrText(''); // Clear input after saving
+                      }
+                    }}
+                    disabled={!customDhikrText.trim()}
+                  >
+                    {t.save}
+                  </button>
+                </div>
+              )
+            ) : (
+              <div className="selected-dhikr-name">
+                {language === 'en' ? selectedDhikr.name : selectedDhikr.nameUz}
+              </div>
+            )}
             {selectedDhikr.arabic && (
               <div className="selected-dhikr-arabic">{selectedDhikr.arabic}</div>
             )}

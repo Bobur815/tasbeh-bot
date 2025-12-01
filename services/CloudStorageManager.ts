@@ -160,7 +160,8 @@ export class CloudStorageManager {
 
   public async updateCurrentSessionCount(
     dhikrTypeId: string,
-    count: number
+    count: number,
+    customName?: string
   ): Promise<boolean> {
     try {
       const userData = await this.getUserData();
@@ -172,10 +173,16 @@ export class CloudStorageManager {
           sessions: [],
           totalCount: 0,
           dhikrTypes: {},
+          customDhikrNames: {},
         };
       }
 
       const dailyStats = userData.dailyStats[today];
+
+      // Initialize customDhikrNames if it doesn't exist (for backward compatibility)
+      if (!dailyStats.customDhikrNames) {
+        dailyStats.customDhikrNames = {};
+      }
 
       let currentSession = dailyStats.sessions.find(
         s => s.dhikrTypeId === dhikrTypeId && !s.endTime
@@ -187,8 +194,11 @@ export class CloudStorageManager {
           count: 0,
           startTime: Date.now(),
           date: today,
+          customName,
         };
         dailyStats.sessions.push(currentSession);
+      } else if (customName) {
+        currentSession.customName = customName;
       }
 
       const diff = count - currentSession.count;
@@ -197,6 +207,12 @@ export class CloudStorageManager {
       dailyStats.totalCount += diff;
       dailyStats.dhikrTypes[dhikrTypeId] =
         (dailyStats.dhikrTypes[dhikrTypeId] || 0) + diff;
+
+      // Store custom name if provided
+      if (customName && dhikrTypeId === 'custom') {
+        dailyStats.customDhikrNames[dhikrTypeId] = customName;
+      }
+
       userData.totalLifetimeCount += diff;
       userData.lastActivityDate = today;
 
