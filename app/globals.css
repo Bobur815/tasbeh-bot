@@ -412,6 +412,318 @@ select.has-custom {
   display: block;
 }
 
+/* Navigation Bar */
+.nav-bar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.nav-button {
+  flex: 1;
+  padding: 10px 12px;
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 12px;
+  color: var(--primary-teal);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nav-button:active {
+  background: var(--accent-gold);
+  color: white;
+  transform: scale(0.98);
+}
+
+/* Selected Dhikr Display */
+.selected-dhikr {
+  text-align: center;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 260px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.selected-dhikr-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-teal);
+  margin-bottom: 4px;
+}
+
+.selected-dhikr-arabic {
+  font-size: 18px;
+  font-family: 'Amiri', serif;
+  color: var(--accent-gold);
+}
+
+/* Dhikr Selector View */
+.dhikr-selector-view,
+.stats-view,
+.settings-view {
+  max-width: 420px;
+  width: 100%;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.view-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.view-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-teal);
+  flex: 1;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.back-button {
+  padding: 8px 16px;
+  background: white;
+  border: 2px solid var(--primary-teal);
+  border-radius: 10px;
+  color: var(--primary-teal);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.back-button:active {
+  background: var(--primary-teal);
+  color: white;
+  transform: scale(0.98);
+}
+
+/* Dhikr List */
+.dhikr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dhikr-card {
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dhikr-card:active {
+  transform: scale(0.98);
+  background: var(--bg-cream);
+}
+
+.dhikr-info {
+  margin-bottom: 8px;
+}
+
+.dhikr-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-teal);
+  margin-bottom: 4px;
+}
+
+.dhikr-arabic {
+  font-size: 18px;
+  font-family: 'Amiri', serif;
+  color: var(--accent-gold);
+  text-align: right;
+  margin-top: 4px;
+}
+
+.dhikr-stats {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-weight: 500;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: var(--primary-teal);
+  font-size: 16px;
+}
+
+.stat-separator {
+  color: var(--text-light);
+}
+
+.stat-target {
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--bg-cream);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-gold);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Stats View */
+.stats-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-card {
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stats-label {
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.stats-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary-teal);
+}
+
+.dhikr-breakdown {
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dhikr-breakdown h3 {
+  font-size: 16px;
+  color: var(--primary-teal);
+  margin-bottom: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bg-cream);
+}
+
+.breakdown-item:last-child {
+  border-bottom: none;
+}
+
+.breakdown-name {
+  font-size: 14px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.breakdown-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-teal);
+}
+
+.no-stats {
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Settings View */
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-item {
+  background: white;
+  border: 2px solid var(--accent-gold);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.setting-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.setting-toggle {
+  padding: 8px 16px;
+  background: var(--primary-teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.setting-toggle:active {
+  transform: scale(0.98);
+  background: var(--primary-teal-dark);
+}
+
 /* Responsive adjustments */
 @media (max-width: 380px) {
   .big-dhikr-button {
@@ -435,5 +747,14 @@ select.has-custom {
   .target-selector {
     max-width: 240px;
     padding: 12px;
+  }
+
+  .nav-button {
+    font-size: 11px;
+    padding: 8px 8px;
+  }
+
+  .selected-dhikr {
+    max-width: 240px;
   }
 }

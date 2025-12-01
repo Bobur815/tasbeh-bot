@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasbeh Bot - Digital Dhikr Counter 🤲
 
-## Getting Started
+A beautiful, feature-rich digital dhikr counter with bilingual support, cloud storage, and daily statistics. Perfect for tracking your daily remembrance of Allah.
 
-First, run the development server:
+## ✨ Features
+
+- 🌍 **Bilingual Support**: English & Uzbek (default: Uzbek)
+- 🤲 **Multiple Dhikr Types**: Subhanallah, Alhamdulillah, Allahu Akbar, and more
+- 📊 **Daily Statistics**: Track your progress and lifetime totals
+- ☁️ **Cloud Storage**: Telegram Cloud Storage integration with localStorage fallback
+- 🔔 **Notification Settings**: Daily reminder toggles
+- 🎯 **Custom Targets**: Set your own goals or use predefined targets (33, 99, 100)
+- 📱 **Mobile Optimized**: Haptic feedback, large buttons, responsive design
+- 🎨 **Beautiful UI**: Elegant Islamic-inspired design with teal & gold theme
+
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📖 Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Counter View
+1. Select a dhikr type from the navigation
+2. Tap the large + button to count
+3. Your progress is saved automatically
+4. Reset when you reach your target
 
-## Learn More
+### Dhikr Selector
+- Browse 6+ predefined dhikr types with Arabic text
+- See today's progress for each type
+- Visual progress bars
 
-To learn more about Next.js, take a look at the following resources:
+### Statistics
+- View today's total and lifetime counts
+- Breakdown by dhikr type
+- Track your consistency
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Settings
+- Switch between English and Uzbek
+- Toggle daily reminders
+- All preferences saved automatically
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏗️ Project Structure
 
-## Deploy on Vercel
+```
+tasbeh-bot/
+├── app/
+│   ├── page.tsx          # Main app with all views
+│   ├── layout.tsx        # Root layout
+│   └── globals.css       # All styles
+├── types/
+│   └── dhikr.ts         # TypeScript interfaces
+├── services/
+│   └── CloudStorageManager.ts  # Cloud storage
+└── public/
+    └── icons8-retry-60.png
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Built With
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 16** - React framework with Turbopack
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Telegram WebApp API** - Cloud storage integration
+
+## 📋 Available Dhikr Types
+
+1. **Subhanallah** (سُبْحَانَ ٱللَّٰهِ) - Target: 33
+2. **Alhamdulillah** (ٱلْحَمْدُ لِلَّٰهِ) - Target: 33
+3. **Allahu Akbar** (ٱللَّٰهُ أَكْبَرُ) - Target: 33
+4. **La ilaha illallah** (لَا إِلَٰهَ إِلَّا ٱللَّٰهُ) - Target: 100
+5. **Astaghfirullah** (أَسْتَغْفِرُ ٱللَّٰهَ) - Target: 100
+6. **Salawat** (ٱللَّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ) - Target: 100
+7. **Custom Count** - Set your own target
+
+## 🔄 Data Storage
+
+The app uses a dual-storage system:
+- **Primary**: Telegram Cloud Storage (when running in Telegram)
+- **Fallback**: Browser localStorage (for web use)
+- All data syncs automatically
+- Keeps 90 days of history
+
+## 🎯 Future Enhancements
+
+- Telegram Bot integration for notifications
+- Weekly and monthly reports
+- Streak tracking
+- Custom dhikr types
+- Social features
+
+## 📝 License
+
+MIT
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 Documentation
+
+For detailed features and technical documentation, see [FEATURES.md](./FEATURES.md)
+
+## 🔧 Development
+
+```bash
+# Development
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## 🌟 Acknowledgments
+
+Built with ❤️ for the Muslim community
+
+---
+
+**May Allah accept all your dhikr! 🤲**
