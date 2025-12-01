@@ -24,7 +24,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 12px;
   position: relative;
   overflow-x: hidden;
 }
@@ -54,20 +54,20 @@ body::before {
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .basmala {
   font-family: 'Amiri', serif;
-  font-size: 24px;
+  font-size: 20px;
   color: var(--accent-gold);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   text-shadow: 0 2px 4px rgba(204, 164, 59, 0.2);
 }
 
 .app-title {
   font-family: 'Amiri', serif;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-dark);
   font-weight: 400;
 }
@@ -81,19 +81,18 @@ body::before {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 100%;
-  max-width: 280px;
-  padding: 40px 20px;
+  max-width: 260px;
+  padding: 28px 18px;
   text-align: center;
   box-shadow:
     inset 0 0 30px rgba(204, 164, 59, 0.08),
     0 8px 16px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-top: 40px;
+  gap: 8px;
 }
 
 .counter-display::before {
@@ -109,15 +108,15 @@ body::before {
 }
 
 .count-number {
-  font-size: 72px;
+  font-size: 56px;
   font-weight: 700;
   color: var(--primary-teal);
   line-height: 1;
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .count-label {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--text-light);
   font-weight: 400;
 }
@@ -125,20 +124,20 @@ body::before {
 /* Target Selector */
 .target-selector {
   width: 100%;
-  max-width: 280px;
-  margin-bottom: 30px;
+  max-width: 260px;
+  margin-bottom: 20px;
   background: white;
   border: 2px solid var(--accent-gold);
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
 }
 
 .target-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-light);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   text-align: center;
   font-weight: 600;
   text-transform: uppercase;
@@ -168,14 +167,14 @@ body::before {
 
 select {
   width: 100%;
-  padding: 14px 40px 14px 20px;
-  font-size: 16px;
+  padding: 12px 40px 12px 18px;
+  font-size: 15px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   color: var(--primary-teal);
   background: var(--bg-cream);
   border: 2px solid transparent;
-  border-radius: 15px;
+  border-radius: 12px;
   appearance: none;
   cursor: pointer;
   outline: none;
@@ -194,7 +193,7 @@ select:focus {
 }
 
 select.has-custom {
-  border-radius: 15px 15px 0 0;
+  border-radius: 12px 12px 0 0;
   border-bottom: 1px dashed var(--accent-gold);
 }
 
@@ -219,14 +218,14 @@ select.has-custom {
 
 .custom-input {
   width: 100%;
-  padding: 14px 20px;
-  font-size: 16px;
+  padding: 12px 18px;
+  font-size: 15px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   color: var(--primary-teal);
   background: var(--bg-cream);
   border: 2px solid transparent;
-  border-radius: 0 0 15px 15px;
+  border-radius: 0 0 12px 12px;
   text-align: center;
   outline: none;
   transition: all 0.3s ease;
@@ -253,17 +252,17 @@ select.has-custom {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
 }
 
 /* Big Dhikr Button */
 .big-dhikr-button {
-  width: 280px;
-  height: 280px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   background: linear-gradient(145deg, var(--primary-teal), var(--primary-teal-dark));
-  border: 5px solid var(--accent-gold);
+  border: 4px solid var(--accent-gold);
   box-shadow:
     0 12px 24px rgba(0, 0, 0, 0.15),
     inset 0 6px 20px rgba(255, 255, 255, 0.2);
@@ -295,7 +294,7 @@ select.has-custom {
 }
 
 .button-icon {
-  font-size: 64px;
+  font-size: 48px;
   color: white;
   font-weight: 300;
   user-select: none;
@@ -306,19 +305,19 @@ select.has-custom {
 /* Secondary Buttons */
 .secondary-buttons {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
 .btn-decrease {
-  padding: 12px 40px;
+  padding: 10px 32px;
   border: 2px solid var(--primary-teal);
   color: var(--primary-teal);
   background: transparent;
-  border-radius: 30px;
-  font-size: 16px;
+  border-radius: 25px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -354,8 +353,8 @@ select.has-custom {
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   background: white;
-  padding: 40px;
-  border-radius: 20px;
+  padding: 32px;
+  border-radius: 18px;
   border: 3px solid var(--accent-gold);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -370,23 +369,23 @@ select.has-custom {
 .completion-message h2 {
   font-family: 'Amiri', serif;
   color: var(--primary-teal);
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 8px;
 }
 
 .completion-message p {
   color: var(--text-light);
-  font-size: 16px;
-  margin-bottom: 20px;
+  font-size: 15px;
+  margin-bottom: 18px;
 }
 
 .completion-message button {
-  padding: 12px 30px;
+  padding: 10px 28px;
   background: var(--primary-teal);
   color: white;
   border: none;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 22px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -416,15 +415,25 @@ select.has-custom {
 /* Responsive adjustments */
 @media (max-width: 380px) {
   .big-dhikr-button {
-    width: 240px;
-    height: 240px;
+    width: 200px;
+    height: 200px;
   }
 
   .button-icon {
-    font-size: 48px;
+    font-size: 42px;
   }
 
   .count-number {
-    font-size: 60px;
+    font-size: 48px;
+  }
+
+  .counter-display {
+    max-width: 240px;
+    padding: 24px 16px;
+  }
+
+  .target-selector {
+    max-width: 240px;
+    padding: 12px;
   }
 }
