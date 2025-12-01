@@ -173,7 +173,7 @@ export default function Home() {
     setReminderEnabled(newValue);
     await storage.updateUserPreferences({ reminderEnabled: newValue });
   };
-  
+
 
   if (view === 'dhikr-selector') {
     return (
@@ -217,15 +217,18 @@ export default function Home() {
       <div className="container">
         {/* Navigation Bar */}
         <div className="nav-bar">
-          <button className="nav-button" onClick={() => setView('dhikr-selector')}>
-            🤲 {t.selectDhikr}
-          </button>
-          <button className="nav-button" onClick={() => setView('stats')}>
-            📊 {t.stats}
-          </button>
-          <button className="nav-button" onClick={() => setView('settings')}>
-            ⚙️ {t.settings}
-          </button>
+          <div className="nav-button" onClick={() => setView('dhikr-selector')}>
+            <span>🤲</span>
+            {t.selectDhikr}
+          </div>
+          <div className="nav-button" onClick={() => setView('stats')}>
+            <span>📊</span>
+            {t.stats}
+          </div>
+          <div className="nav-button" onClick={() => setView('settings')}>
+            <span>⚙️</span>
+            {t.settings}
+          </div>
         </div>
 
         {/* Selected Dhikr Display */}
@@ -323,7 +326,7 @@ export default function Home() {
               − 1
             </button>
             <button className="btn-decrease" onClick={handleReset}>
-              <img src="/icons8-retry-60.png" alt="" className='w-6 h-6'/>
+              <img src="/icons8-retry-60.png" alt="" className='w-6 h-6' />
             </button>
           </div>
         </div>

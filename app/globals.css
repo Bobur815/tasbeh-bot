@@ -294,7 +294,7 @@ select.has-custom {
 }
 
 .button-icon {
-  font-size: 48px;
+  font-size: 110px;
   color: white;
   font-weight: 300;
   user-select: none;
@@ -424,7 +424,11 @@ select.has-custom {
 
 .nav-button {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 10px 12px;
+  justify-content: center;
+  align-items: center;
   background: white;
   border: 2px solid var(--accent-gold);
   border-radius: 12px;
@@ -732,7 +736,7 @@ select.has-custom {
   }
 
   .button-icon {
-    font-size: 42px;
+    font-size: 52px;
   }
 
   .count-number {
