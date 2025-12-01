@@ -1,65 +1,177 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [count, setCount] = useState(0);
+  const [target, setTarget] = useState(99);
+  const [showCompletion, setShowCompletion] = useState(false);
+  const [showCustomInput, setShowCustomInput] = useState(false);
+  const [customValue, setCustomValue] = useState('');
+
+  // Load count from local storage on initial mount
+  useEffect(() => {
+    const savedCount = localStorage.getItem('last_count');
+    if (savedCount !== null) {
+      setCount(parseInt(savedCount));
+    }
+  }, []);
+
+  // Save count to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('last_count', count.toString());
+  }, [count]);
+
+  // Haptic Feedback (if supported)
+  const hapticFeedback = () => {
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate(10);
+    }
+  };
+
+  // Check if target is reached
+  useEffect(() => {
+    if (count === target && count > 0) {
+      setShowCompletion(true);
+    }
+  }, [count, target]);
+
+  // Prevent pull-to-refresh on mobile
+  useEffect(() => {
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+
+    document.body.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => {
+      document.body.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
+
+  const handleIncrease = () => {
+    setCount(count + 1);
+    hapticFeedback();
+  };
+
+  const handleDecrease = () => {
+    if (count > 0) {
+      setCount(count - 1);
+      hapticFeedback();
+    }
+  };
+
+  const handleReset = () => {
+    if (confirm('Hisoblashni qayta boshlashni xohlaysizmi?')) {
+      setCount(0);
+    }
+  };
+
+  const handleContinue = () => {
+    setShowCompletion(false);
+    setCount(0);
+  };
+
+  const handleTargetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+
+    if (value === 'custom') {
+      setShowCustomInput(true);
+    } else {
+      setShowCustomInput(false);
+      setTarget(parseInt(value));
+    }
+  };
+
+  const handleCustomInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomValue(value);
+    const numValue = parseInt(value);
+    if (numValue > 0) {
+      setTarget(numValue);
+    }
+  };
+
+  const handleOverlayClick = () => {
+    setShowCompletion(false);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <div className="container">
+        {/* Header
+        <div className="header">
+          <div className="basmala">بِسْمِ اللَّهِ</div>
+          <h1 className="app-title">Tasbeh Hisoblagich</h1>
+        </div> */}
+
+        {/* Main Counter Display */}
+        <div className="counter-display">
+          <div className="count-number">{count}</div>
+          <div className="count-label">/ {target}</div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Target Selector */}
+        <div className="target-selector">
+          <div className="target-label">Maqsad tanlang</div>
+          <div className="select-wrapper">
+            <select onChange={handleTargetChange} defaultValue="99" className={showCustomInput ? 'has-custom' : ''}>
+              <option value="33">33 dona</option>
+              <option value="99">99 dona</option>
+              <option value="100">100 dona</option>
+              <option value="custom">Boshqa raqam</option>
+            </select>
+          </div>
+          {showCustomInput && (
+            <div className="custom-input-wrapper">
+              <input
+                type="number"
+                id='customInput'
+                className="custom-input"
+                min="1"
+                placeholder="Raqamni kiriting"
+                value={customValue}
+                onChange={handleCustomInput}
+                autoFocus
+              />
+            </div>
+          )}
         </div>
-      </main>
-    </div>
+
+        {/* Interaction Zone */}
+        <div className="interaction-zone">
+          {/* Big Dhikr Button */}
+          <button
+            className="big-dhikr-button"
+            onClick={handleIncrease}
+            aria-label="Zikr qo'shish"
+          >
+            <span className="button-icon">+</span>
+          </button>
+
+          {/* Secondary Buttons */}
+          <div className="secondary-buttons">
+            <button className="btn-decrease" onClick={handleDecrease}>
+              − 1
+            </button>
+            <button className="btn-decrease" onClick={handleReset}>
+              <img src="/icons8-retry-60.png" alt="" className='w-6 h-6'/> 
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Completion Message */}
+      <div
+        className={`overlay ${showCompletion ? 'show' : ''}`}
+        onClick={handleOverlayClick}
+      />
+      <div className={`completion-message ${showCompletion ? 'show' : ''}`}>
+        <h2>Субҳаналлоҳ! 🤲</h2>
+        <p>Siz maqsadga yetdingiz!</p>
+        <button onClick={handleContinue}>Davom ettirish</button>
+      </div>
+    </>
   );
 }
